@@ -1,7 +1,7 @@
 {
   "name": "new",
   "version": "1.0.0",
-  "description": "A simple activity tracker made with Vuejs",
+  "description": "A simple activity tracker made with Vuejs.",
   "homepage": "https://dgerrells.github.io/activity-tracker",
   "keywords": [],
   "dependencies": {

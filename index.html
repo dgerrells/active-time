@@ -2,14 +2,11 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  />
-  <meta name="theme-color" content="#000000" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="shortcut icon" href="./favicon.ico" />
     <title>Active Time</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css'>
@@ -96,15 +93,16 @@
         }
 
         .time-tracker {
-            height: 100%;
+            height: fit-content;
+            background: #34495E;
         }
 
         .tracker {
-            color: black;
-            border-bottom: dotted 4px black;
+            color: #fff;
+            border-bottom: dotted 4px #fff;
             position: absolute;
             height: 2px;
-            width: 96%;
+            width: 100%;
             top: 70%;
             right: 0;
             z-index: 1;
@@ -113,16 +111,17 @@
         .tracker i {
             font-size: 40px;
             position: absolute;
-            left: -28px;
+            right: -15px;
             transform: translateY(-18px);
         }
 
         .time-cell {
             width: 100px;
             color: white;
-            background: #34495E;
             text-align: center;
             height: 2.5rem;
+            z-index: 2;
+            text-shadow: 0 2px 3px #000;
         }
 
         .activity-cell {
@@ -192,9 +191,9 @@
                 <h5 class="activity padding">Activity</h5>
             </div>
             <div class="content">
-                <div class="tracker"> <i class="material-icons">keyboard_arrow_left</i> </div>
                 <div class="time-tracker">
                     <div v-for="interval in intervals" class="time-cell padding"> {{interval }} </div>
+                    <div class="tracker"> <i class="material-icons">keyboard_arrow_right</i> </div>
                 </div>
                 <draggable @end="onDragEnd" :list="activityList"
                     :options="{group:'people', animation: 150, handle: '.drag-handle'}" class="activities flex">
@@ -206,7 +205,8 @@
                             </svg></a> <span class="col s8"
                             v-bind:class="{'white-text': activity.color !== 'white'}">{{activity.name }}</span> <span
                             class="flex"></span> <a class="waves-effect waves-dark btn-flat" @click="edit(activity)"><i
-                                class="material-icons">edit</i></a> </div>
+                                class="material-icons">edit</i></a>
+                    </div>
                 </draggable>
             </div>
         </div>
@@ -247,29 +247,59 @@
             </div>
             <div class="modal-footer"> <a class="waves-effect waves-dark btn-flat" @click="closeModal">Close</a> </div>
         </div>
-    </div> <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script
-    src='https://cdn.rawgit.com/vuejs/vue/dev/dist/vue.min.js'></script><script
-    src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js'></script><script
-    src='https://cdn.rawgit.com/RubaXa/Sortable/master/Sortable.min.js'></script><script
-    src='https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/15.0.0/vuedraggable.min.js'></script> <script
-    id="rendered-js" >$(document).ready(function () { $('.modal').modal();});var save = function (data) {
-    window.localStorage.setItem('save', JSON.stringify(data));};var app = new Vue({ el: '#app', data: { modalActivity:
-    {}, intervals: [], activityList: [] }, watch: { modalActivity: { handler: function (val, oldVal) {
-    this.activityList.forEach(function (activity) { if (activity.name === this.modalActivity.name) {
-    this.modalActivity.color = activity.color; } }, this); save(this.activityList); }, deep: true } }, methods: {
-    onDragEnd: function () { save(this.activityList); }, edit: function (activity, event) { this.modalActivity =
-    activity; $('#edit-activity').modal('open'); $('#modelActivityText').get(0).focus(); $('.modallabel').addClass('active'); }, closeModal: function () { $('#edit-activity').modal('close'); },
-    changeModalActivityColor: function (color) { this.modalActivity.color = color; this.activityList.forEach(function
-    (activity) { if (activity.name === this.modalActivity.name) { activity.color = color; } }, this); } }, created:
-    function () { window.setInterval(function () { var currentTime = new Date(); var height = 0;
-    $('.time-tracker').children().each(function () { height += $(this).outerHeight(); }); var heightPercent =
-    (currentTime.getHours() * 60 + currentTime.getMinutes()) / (24 * 60); $('.tracker').css('top', heightPercent *
-    height + 'px'); console.log(height, heightPercent); }, 1000); var date = new Date(); for (var i = 0; i < 24; i++) {
-        date.setHours(i); date.setMinutes(0); var text=date.toLocaleString('en-US', { minute: 'numeric' ,
-        hour: 'numeric' , hour12: true }); this.intervals.push(text); } try {
-        this.activityList=JSON.parse(window.localStorage.getItem('save')) || []; } catch (e) { console.error(e);
-        this.activityList=[]; } if (this.activityList.length> 4) { return; } for (var i = 0; i < 24; i++) {
-            this.activityList.push({ name: 'Empty' , color: 'white' }); } } }); </script>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script src='https://cdn.rawgit.com/vuejs/vue/dev/dist/vue.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js'></script>
+    <script src='https://cdn.rawgit.com/RubaXa/Sortable/master/Sortable.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/15.0.0/vuedraggable.min.js'></script>
+    <script id="rendered-js">$(document).ready(function () { $('.modal').modal(); }); var save = function (data) {
+            window.localStorage.setItem('save', JSON.stringify(data));
+        }; var app = new Vue({
+            el: '#app', data: {
+                modalActivity:
+                    {}, intervals: [], activityList: []
+            }, watch: {
+                modalActivity: {
+                    handler: function (val, oldVal) {
+                        this.activityList.forEach(function (activity) {
+                            if (activity.name === this.modalActivity.name) {
+                                this.modalActivity.color = activity.color;
+                            }
+                        }, this); save(this.activityList);
+                    }, deep: true
+                }
+            }, methods: {
+                onDragEnd: function () { save(this.activityList); }, edit: function (activity, event) {
+                    this.modalActivity =
+                    activity; $('#edit-activity').modal('open'); $('#modelActivityText').get(0).focus(); $('.modallabel').addClass('active');
+                }, closeModal: function () { $('#edit-activity').modal('close'); },
+                changeModalActivityColor: function (color) {
+                    this.modalActivity.color = color; this.activityList.forEach(function
+                        (activity) { if (activity.name === this.modalActivity.name) { activity.color = color; } }, this);
+                }
+            }, created:
+                function () {
+                    window.setInterval(function () {
+                        var currentTime = new Date(); var height = 0;
+                        $('.time-tracker').children().each(function () { height += $(this).outerHeight(); }); var heightPercent =
+                            (currentTime.getHours() * 60 + currentTime.getMinutes()) / (24 * 60); $('.tracker').css('top', heightPercent *
+                                height + 'px'); console.log(height, heightPercent);
+                    }, 1000); var date = new Date(); for (var i = 0; i < 24; i++) {
+                        date.setHours(i); date.setMinutes(0); var text = date.toLocaleString('en-US', {
+                            minute: 'numeric',
+                            hour: 'numeric', hour12: true
+                        }); this.intervals.push(text);
+                    } try {
+                        this.activityList = JSON.parse(window.localStorage.getItem('save')) || [];
+                    } catch (e) {
+                        console.error(e);
+                        this.activityList = [];
+                    } if (this.activityList.length > 4) { return; } for (var i = 0; i < 24; i++) {
+                        this.activityList.push({ name: 'Empty', color: 'blue-grey' });
+                    }
+                }
+        }); </script>
 </body>
 
 </html>

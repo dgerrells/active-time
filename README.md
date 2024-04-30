@@ -1,4 +1,3 @@
-# repple
-Created with CodeSandbox
+# Activity Tracker
 
-A workout app.
+A codepen project for easy simple activity tracking. Made with a sprinkle of Vue. 

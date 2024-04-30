@@ -1,6 +1,6 @@
 {
-    "short_name": "Repple",
-    "name": "Repple - fitness tracker",
+    "short_name": "Activity Tracker",
+    "name": "Activity Tracker - Simple activity tracker",
     "icons": [
       {
         "src": "favicon.ico",
@@ -20,6 +20,6 @@
     ],
     "start_url": ".",
     "display": "standalone",
-    "theme_color": "#713A4F",
+    "theme_color": "#46637f",
     "background_color": "#ffffff"
   }
